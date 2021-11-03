@@ -11,7 +11,12 @@ export default class Index extends Component {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () {
+    Taro.eventCenter.on("leaveAbout", timerRef => {
+      console.log("leaveAbout==>");
+      timerRef && timerRef.current && clearInterval(timerRef.current);
+    })
+  }
 
   componentDidHide () { }
 
@@ -23,6 +28,12 @@ export default class Index extends Component {
     })
   }
 
+  gotoWebView = () => {
+    Taro.navigateTo({
+      url: '/pages/webView/index'
+    })
+  }
+
   render () {
     return (
       <View className='index'>
@@ -30,6 +41,10 @@ export default class Index extends Component {
 
         <Button type='primary' className='button' onClick={this.gotoAbout}>
           <Icon size='23' type='warn' className='icon' /> goto about
+        </Button>
+
+        <Button type='primary' className='button' onClick={this.gotoWebView}>
+          <Icon size='23' type='warn' className='icon' /> webview
         </Button>
       </View>
     )
